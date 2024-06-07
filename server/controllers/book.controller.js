@@ -35,7 +35,7 @@ export const updateBookById = async(req, res, next) => {
     const {id} = req.params
     const options = {
         new: true,
-        runValidations: true
+        runValidators: true
     }
     try {
         const UPDATED_BOOK = await Book.findByIdAndUpdate(id, req.body, options)

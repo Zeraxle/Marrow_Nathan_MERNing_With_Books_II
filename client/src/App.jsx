@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path='/' element={<AllBooks books={books} setBooks={setBooks}/>}/>
         <Route path='/book/create' element={<AddBook submitFunction={createBook}/>}/>
-        <Route path='/book/:id/details' element={<BookDetails/>}/>
+        <Route path='/book/:id/details' element={<BookDetails setBooks={setBooks}/>}/>
       </Routes>
     </>
   )

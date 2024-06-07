@@ -25,7 +25,7 @@ const BookSchema = new Schema(
 
         isAvailable: {
             type: Boolean,
-            default: false,
+            default: false
         }
     },
     {timestamps: true}

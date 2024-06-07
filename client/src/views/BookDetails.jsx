@@ -3,8 +3,9 @@ import { useParams, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { deleteBookById, getBookById } from "../services/book.service"
 
-const BookDetails = () => {
+const BookDetails = (props) => {
 
+    const {setBooks} = props
     const {id} = useParams()
     const navigate = useNavigate()
     const [bookData, setBookData] = useState({})
@@ -17,6 +18,7 @@ const BookDetails = () => {
 
     const borrowBook = () => {
         deleteBookById(id)
+        setBooks(prev => prev.filter(book => id != book._id))
         navigate('/')
     }
 

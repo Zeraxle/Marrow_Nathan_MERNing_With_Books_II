@@ -1,7 +1,7 @@
 import Nav from "../components/Nav"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import BookDetails from "./BookDetails"
+
 
 const AddBook = (props) => {
 
@@ -11,14 +11,18 @@ const AddBook = (props) => {
         title: ``,
         author: ``,
         pages: ``,
-        isAvailable: ''
+        isAvailable: false
     })
 
     const [bookErrors, setBookErrors] = useState({})
 
     const updateBookData = (e) => {
         const {name, value} = e.target
-        setBookData(prev => ({...prev, [name]: value}))
+        if (name === "isAvailable"){
+            let checkedValue = e.target.checked
+            setBookData(prev => ({...prev, [name]: checkedValue}))
+        } else {setBookData(prev => ({...prev, [name]: value})) }
+        
     }
 
     const submitHandler = (e) => {
@@ -26,13 +30,8 @@ const AddBook = (props) => {
         submitFunction(bookData)
             .then(() => navigate('/'))
             .catch(error => setBookErrors(error))
-        setBookData({
-            title: '',
-            author: '',
-            pages: '',
-            isAvailable: ''
-        })
     }
+
     return(<>
         <Nav title={`Add a Book`}/>
         <form onSubmit={submitHandler} className="book-form">
@@ -60,25 +59,15 @@ const AddBook = (props) => {
                     onInput={updateBookData}
                     value={bookData.pages}/>
             </label>
-            <div>
-                <p>Is it Available?</p>
-                <label>
-                    Yes
-                    <input 
-                        type="radio" 
-                        name="isAvailable" 
-                        onChange={updateBookData}
-                        value={true}/>
-                </label>
-                <label>
-                    No 
-                    <input 
-                        type="radio" 
-                        name="isAvailable"
-                        onChange={updateBookData}
-                        value={false} />
-                </label>
-            </div>
+            <label>
+                Can this book be borrowed?
+                <input 
+                    type="checkbox" 
+                    name="isAvailable" 
+                    onChange={updateBookData}
+                    value={bookData.isAvailable}
+                    />
+            </label>
             <input type="submit" value="Add Book" />
         </form>
     </>)
